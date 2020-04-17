@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package com.grpc.payment;
+
+option java_multiple_files = true;
+
+// define message structures 
+message Payment{
+  int32 id = 1;
+  int32 account = 2;
+  int32 amount = 3;
+  string message = 4;
+}
+
+message PaymentResponse{
+  int32 id = 1;
+  string message = 2;
+}
+
+message Account {
+  int32 account = 1;
+}
+
+message Notification {
+  Account account = 1;
+  int32 amount = 2;
+  string message = 3;
+}
+
+// define service contract 
+service PaymentService {
+  rpc makePayment(Payment) returns (PaymentResponse);
+  rpc recieveNotification(Account) returns (stream Notification);
+}
